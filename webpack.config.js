@@ -1,5 +1,7 @@
+var webpack = require('webpack');
+
 module.exports = {
-    entry: "./app/app.js",
+    entry: "./app.js",
     output: {
         filename: "public/js/compiled.js",
         sourceMapFilename: "public/js/compiled.map"
@@ -12,5 +14,8 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
-    }
+    },
+    // plugins: [
+    //   new webpack.optimize.UglifyJsPlugin({minimize: true})
+    // ]
 }

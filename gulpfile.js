@@ -9,7 +9,7 @@ gulp.task('clean', function() {
 })
 
 gulp.task('build', ['clean'], function() {
-  return gulp.src('./app/app.js')
+  return gulp.src('./app.js')
     .pipe(webpack(webpackConfig))
     .on('error', function handleError() {
       this.emit('end'); // Recover from errors
@@ -18,7 +18,7 @@ gulp.task('build', ['clean'], function() {
 });
 
 gulp.task('watch:build', function() {
-  return gulp.watch('./app/**/*', ['build']);
+  return gulp.watch(['./components/**/*', './config/*'], ['build']);
 });
 
 gulp.task('serve:node', function(done) {

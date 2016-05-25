@@ -16,7 +16,6 @@ app.get("/", function (req, res) {
 });
 
 app.get('*', function(req, res, next) {
-  console.log('Request: [GET]', req.originalUrl)
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 

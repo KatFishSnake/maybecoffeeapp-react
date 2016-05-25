@@ -1,9 +1,8 @@
 import React from "react";
-import Select from "./select";
+import update from "react-addons-update";
+import Select from "./Select";
 
-const Create = React.createClass({
-	getInitialState: function () {
-		return {
+const presets = {
 			name: {
 				placeholder: "Your name please",
 				value: ""
@@ -70,10 +69,38 @@ const Create = React.createClass({
 				]
 			}
 		};
+
+const Create = React.createClass({
+	getInitialState: function () {
+		return presets;
+	},
+	sanitizeValues: function (data) {
+		let result = [];
+
+		data.name.value = this.refs.name.value;
+		data.note.value = this.refs.note.value;
+
+		for (let prop in data) {
+			result.push({[prop]: data[prop].value});
+		}
+		return result;
+	},
+	setFormPrestine: function () {
+		this.replaceState(presets);
 	},
 	onOrderSubmit: function (e) {
 		e.preventDefault();
-		console.log(this.state);
+
+		this.props.onOrder(this.sanitizeValues(this.state));
+	},
+	updateValues: function (name, value) {
+		let newState = update(this.state, {
+		  [name]: {
+		    value: { $set: value }
+		  }
+		});
+
+		this.setState(newState);
 	},
 	render: function () {
 		return (
@@ -85,40 +112,43 @@ const Create = React.createClass({
 
 		      <div>
 		          <input 
+		          ref="name"
 		          autoComplete="off" 
 		          className="name" 
 		          type="text" 
+		          required="required" 
 		          placeholder={this.state.name.placeholder} 
 		          defaultValue={this.state.name.value} />
 		      </div>
 
 		      	<div>
 			        <div>What coffee whould you like?</div>
-			        <Select data={this.state.coffee} classname={"coffee"} />
+			        <Select data={this.state.coffee} classname={"coffee"} name={"coffee"} onUpdate={this.updateValues}/>
 		        </div>
 
 				<div>
 		        	<div>How many shots?</div>
-			        <Select data={this.state.shots} classname={"shots"} />
+			        <Select data={this.state.shots} classname={"shots"} name={"shots"} onUpdate={this.updateValues}/>
 		        </div>
 
 				<div>
 		        	<div>How hot?</div>
-			        <Select data={this.state.temp} classname={"temp"} />
+			        <Select data={this.state.temp} classname={"temp"} name={"temp"} onUpdate={this.updateValues} />
 		        </div>
 
 				<div>
 		        	<div>Diary?</div>
-		        	<Select data={this.state.diary} classname={"diary"} />
+		        	<Select data={this.state.diary} classname={"diary"} name={"diary"}  onUpdate={this.updateValues}/>
 		        </div>
 
 				<div>
 		        	<div>Flavour?</div>
-		        	<Select data={this.state.flavour} classname={"flavour"} />
+		        	<Select data={this.state.flavour} classname={"flavour"} name={"flavour"}  onUpdate={this.updateValues}/>
 		        </div>
 
 		      <div>
 				<input 
+		          ref="note"
 		          autoComplete="off" 
 		          className="note" 
 		          type="text" 
