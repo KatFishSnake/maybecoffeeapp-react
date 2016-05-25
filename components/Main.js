@@ -5,17 +5,7 @@ const Main = React.createClass({
 	render: function () {
 		return (
 			<div className="app">
-		        <h1> hello</h1>
-	        </div>
-		);
-	}
-});
-
-export default Main;
-
-
-/* instead of hello
-<div className="menu">
+		        <div className="menu">
 	                <Link to="/order" className="logo">
 	                    Maybe coffee app
 	                </Link>
@@ -28,4 +18,12 @@ export default Main;
 		        <div>
 		        	{this.props.children}
 		        </div>
- */
+	        </div>
+		);
+	}
+});
+
+export default Main;
+
+
+

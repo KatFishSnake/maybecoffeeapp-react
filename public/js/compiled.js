@@ -25328,31 +25328,36 @@
 				"div",
 				{ className: "app" },
 				_react2.default.createElement(
-					"h1",
+					"div",
+					{ className: "menu" },
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: "/order", className: "logo" },
+						"Maybe coffee app"
+					),
+					_react2.default.createElement("br", null),
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: "/order", className: "order" },
+						"Current Order"
+					),
+					_react2.default.createElement("br", null),
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: "/que", className: "que" },
+						"Que"
+					)
+				),
+				_react2.default.createElement(
+					"div",
 					null,
-					" hello"
+					this.props.children
 				)
 			);
 		}
 	});
 	
 	exports.default = Main;
-	
-	/* instead of hello
-	<div className="menu">
-		                <Link to="/order" className="logo">
-		                    Maybe coffee app
-		                </Link>
-		                <br />
-		                <Link to="/order" className="order">Current Order</Link>
-		                <br />
-		                <Link to="/que" className="que">Que</Link>
-			        </div>
-
-			        <div>
-			        	{this.props.children}
-			        </div>
-	 */
 
 /***/ },
 /* 223 */
