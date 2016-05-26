@@ -5,21 +5,20 @@ import Status from "./Status"
 const Order = React.createClass({
 	getInitialState: function () {
 		return {
-			created: false,
 			order: null
 		};
 	},
 	onOrder: function (order) {
-		this.setState({
-			created: true,
+		let self = this;
+		self.setState({
 			order: order
 		});
 	},
 	render: function () {
 		return (
 			<div>
-	            {this.state.created ? (
-	              <Status></Status>
+	            {this.state.order ? (
+	              <Status data={this.state.order}></Status>
 	            ) : (
 	              <Create onOrder={this.onOrder}></Create>
 	            )}

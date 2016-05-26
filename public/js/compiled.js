@@ -25197,15 +25197,19 @@
 	
 	var _auth2 = _interopRequireDefault(_auth);
 	
-	var _Main = __webpack_require__(222);
+	var _Login = __webpack_require__(222);
+	
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _Main = __webpack_require__(223);
 	
 	var _Main2 = _interopRequireDefault(_Main);
 	
-	var _Que = __webpack_require__(223);
+	var _Que = __webpack_require__(224);
 	
 	var _Que2 = _interopRequireDefault(_Que);
 	
-	var _Order = __webpack_require__(224);
+	var _Order = __webpack_require__(225);
 	
 	var _Order2 = _interopRequireDefault(_Order);
 	
@@ -25227,17 +25231,28 @@
 	}
 	
 	exports.default = {
-			component: __webpack_require__(222),
-			childRoutes: [{ path: '/order',
+			component: _Main2.default,
+			childRoutes: [{ onEnter: redirectToDashboard,
+					childRoutes: [
+					// Unauthenticated routes
+					// Redirect to dashboard if user is already logged in
+					{ path: '/login',
+							getComponent: function getComponent(nextState, cb) {
+									!/* require.ensure */(function (require) {
+											cb(null, _Login2.default);
+									}(__webpack_require__));
+							}
+					}]
+			}, { path: '/order',
 					getComponent: function getComponent(nextState, cb) {
 							!/* require.ensure */(function (require) {
-									cb(null, __webpack_require__(224));
+									cb(null, _Order2.default);
 							}(__webpack_require__));
 					}
 			}, { path: '/que',
 					getComponent: function getComponent(nextState, cb) {
 							!/* require.ensure */(function (require) {
-									cb(null, __webpack_require__(223));
+									cb(null, _Que2.default);
 							}(__webpack_require__));
 					}
 			}]
@@ -25306,6 +25321,138 @@
 /* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(159);
+	
+	var _auth = __webpack_require__(221);
+	
+	var _auth2 = _interopRequireDefault(_auth);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Login = _react2.default.createClass({
+	  displayName: 'Login',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      error: false,
+	      email: "",
+	      password: ""
+	    };
+	  },
+	  onSignIn: function onSignIn(googleUser) {
+	    var profile = googleUser.getBasicProfile();
+	    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	    console.log('Name: ' + profile.getName());
+	    console.log('Image URL: ' + profile.getImageUrl());
+	    console.log('Email: ' + profile.getEmail());
+	  },
+	  signOut: function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	  },
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	
+	    var email = this.refs.email.value;
+	    var pass = this.refs.pass.value;
+	
+	    // auth.login(email, pass, (loggedIn) => {
+	    //   if (!loggedIn)
+	    //     return this.setState({ error: true })
+	
+	    //   const { location } = this.props
+	
+	    //   if (location.state && location.state.nextPathname) {
+	    //     this.props.router.replace(location.state.nextPathname)
+	    //   } else {
+	    //     this.props.router.replace('/')
+	    //   }
+	    // })
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'form',
+	      { onSubmit: this.handleSubmit },
+	      _react2.default.createElement(
+	        'label',
+	        null,
+	        _react2.default.createElement('input', {
+	          ref: 'email',
+	          placeholder: 'email',
+	          defaultValue: this.state.email })
+	      ),
+	      _react2.default.createElement(
+	        'label',
+	        null,
+	        _react2.default.createElement('input', {
+	          ref: 'pass',
+	          placeholder: 'password',
+	          defaultValue: this.state.password })
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { type: 'submit' },
+	        'login'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.error && _react2.default.createElement(
+	          'p',
+	          null,
+	          'Bad login information'
+	        )
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        'span',
+	        null,
+	        ' -- OR --'
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('div', { id: 'g-signin2', 'data-onsuccess': this.onSignIn }),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '#', onClick: this.signOut },
+	          'Sign out'
+	        )
+	      )
+	    );
+	  },
+	  componentDidMount: function componentDidMount() {
+	    gapi.signin2.render('g-signin2', {
+	      'scope': 'https://www.googleapis.com/auth/plus.login',
+	      'width': 250,
+	      'height': 50,
+	      'longtitle': true,
+	      'theme': 'dark',
+	      'onsuccess': this.onSignIn
+	    });
+	  }
+	
+	});
+	
+	exports.default = (0, _reactRouter.withRouter)(Login);
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -25360,7 +25507,7 @@
 	exports.default = Main;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25390,56 +25537,6 @@
 	exports.default = Que;
 
 /***/ },
-/* 224 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Create = __webpack_require__(225);
-	
-	var _Create2 = _interopRequireDefault(_Create);
-	
-	var _Status = __webpack_require__(229);
-	
-	var _Status2 = _interopRequireDefault(_Status);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Order = _react2.default.createClass({
-		displayName: "Order",
-	
-		getInitialState: function getInitialState() {
-			return {
-				created: false,
-				order: null
-			};
-		},
-		onOrder: function onOrder(order) {
-			this.setState({
-				created: true,
-				order: order
-			});
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				"div",
-				null,
-				this.state.created ? _react2.default.createElement(_Status2.default, null) : _react2.default.createElement(_Create2.default, { onOrder: this.onOrder })
-			);
-		}
-	});
-	
-	exports.default = Order;
-
-/***/ },
 /* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25453,11 +25550,64 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsUpdate = __webpack_require__(226);
+	var _Create = __webpack_require__(226);
+	
+	var _Create2 = _interopRequireDefault(_Create);
+	
+	var _Status = __webpack_require__(231);
+	
+	var _Status2 = _interopRequireDefault(_Status);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Order = _react2.default.createClass({
+		displayName: "Order",
+	
+		getInitialState: function getInitialState() {
+			return {
+				order: null
+			};
+		},
+		onOrder: function onOrder(order) {
+			var self = this;
+			self.setState({
+				order: order
+			});
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				null,
+				this.state.order ? _react2.default.createElement(_Status2.default, { data: this.state.order }) : _react2.default.createElement(_Create2.default, { onOrder: this.onOrder })
+			);
+		}
+	});
+	
+	exports.default = Order;
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsUpdate = __webpack_require__(227);
 	
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 	
-	var _Select = __webpack_require__(228);
+	var _values = __webpack_require__(229);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	var _Select = __webpack_require__(230);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -25465,51 +25615,21 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var presets = {
-		name: {
-			placeholder: "Your name please",
-			value: ""
-		},
-		note: {
-			placeholder: "Add a pleasant note",
-			value: ""
-		},
-		coffee: {
-			value: "Americano",
-			list: [{ title: "Americano", value: "Americano" }, { title: "Americano Misto", value: "Americano Misto" }, { title: "Cappuccino", value: "Cappuccino" }, { title: "Chai Latte", value: "Chai Latte" }, { title: "Espresso", value: "Espresso" }, { title: "Flat White", value: "Flat White" }, { title: "Latte", value: "Latte" }, { title: "London Fog", value: "London Fog" }, { title: "Machiatto", value: "Machiatto" }, { title: "Mocha", value: "Mocha" }]
-		},
-		shots: {
-			value: 0,
-			list: [{ title: "No shots", value: 0 }, { title: "1 shot", value: 1 }, { title: "2 shots", value: 2 }, { title: "3 shots", value: 3 }, { title: "4 shots", value: 4 }]
-		},
-		temp: {
-			value: "Warm",
-			list: [{ title: "Cold", value: "Cold" }, { title: "Warm", value: "Warm" }, { title: "Hot", value: "Hot" }]
-		},
-		diary: {
-			value: "None",
-			list: [{ title: "None", value: "None" }, { title: "Milk", value: "Milk" }, { title: "Soy", value: "Soy" }, { title: "Almond", value: "Almond" }, { title: "Coconut", value: "Coconut" }]
-		},
-		flavour: {
-			value: "None",
-			list: [{ title: "None", value: "None" }, { title: "Flavour of the week", value: "Flavour of the week" }, { title: "Vanilla", value: "Vanilla" }, { title: "Hazelnut", value: "Hazelnut" }, { title: "Caramel", value: "Caramel" }, { title: "Honey", value: "Honey" }, { title: "Cinnamon", value: "Cinnamon" }, { title: "Cardamom", value: "Cardamom" }, { title: "Peppermint", value: "Peppermint" }]
-		}
-	};
-	
 	var Create = _react2.default.createClass({
 		displayName: "Create",
 	
+		mixins: [_values2.default],
 		getInitialState: function getInitialState() {
-			return presets;
+			return this.props.order_presets;
 		},
 		sanitizeValues: function sanitizeValues(data) {
-			var result = [];
+			var result = {};
 	
 			data.name.value = this.refs.name.value;
 			data.note.value = this.refs.note.value;
 	
 			for (var prop in data) {
-				result.push(_defineProperty({}, prop, data[prop].value));
+				result[prop] = data[prop].value;
 			}
 			return result;
 		},
@@ -25622,13 +25742,13 @@
 	exports.default = Create;
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(227);
+	module.exports = __webpack_require__(228);
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25741,7 +25861,64 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 228 */
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var presets = {
+		name: {
+			placeholder: "Your name please",
+			value: ""
+		},
+		note: {
+			placeholder: "Add a pleasant note",
+			value: ""
+		},
+		coffee: {
+			value: "Americano",
+			list: [{ title: "Americano", value: "Americano" }, { title: "Americano Misto", value: "Americano Misto" }, { title: "Cappuccino", value: "Cappuccino" }, { title: "Chai Latte", value: "Chai Latte" }, { title: "Espresso", value: "Espresso" }, { title: "Flat White", value: "Flat White" }, { title: "Latte", value: "Latte" }, { title: "London Fog", value: "London Fog" }, { title: "Machiatto", value: "Machiatto" }, { title: "Mocha", value: "Mocha" }]
+		},
+		shots: {
+			value: 0,
+			list: [{ title: "No shots", value: 0 }, { title: "1 shot", value: 1 }, { title: "2 shots", value: 2 }, { title: "3 shots", value: 3 }, { title: "4 shots", value: 4 }]
+		},
+		temp: {
+			value: "Warm",
+			list: [{ title: "Cold", value: "Cold" }, { title: "Warm", value: "Warm" }, { title: "Hot", value: "Hot" }]
+		},
+		diary: {
+			value: "None",
+			list: [{ title: "None", value: "None" }, { title: "Milk", value: "Milk" }, { title: "Soy", value: "Soy" }, { title: "Almond", value: "Almond" }, { title: "Coconut", value: "Coconut" }]
+		},
+		flavour: {
+			value: "None",
+			list: [{ title: "None", value: "None" }, { title: "Flavour of the week", value: "Flavour of the week" }, { title: "Vanilla", value: "Vanilla" }, { title: "Hazelnut", value: "Hazelnut" }, { title: "Caramel", value: "Caramel" }, { title: "Honey", value: "Honey" }, { title: "Cinnamon", value: "Cinnamon" }, { title: "Cardamom", value: "Cardamom" }, { title: "Peppermint", value: "Peppermint" }]
+		}
+	};
+	
+	var Values = {
+		getDefaultProps: function getDefaultProps() {
+			return {
+				"order_presets": presets
+			};
+		}
+	};
+	
+	exports.default = Values;
+
+/***/ },
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25796,7 +25973,7 @@
 	exports.default = Select;
 
 /***/ },
-/* 229 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25814,7 +25991,25 @@
 	var Status = _react2.default.createClass({
 		displayName: "Status",
 	
+		getInitialState: function getInitialState() {
+			return this.props.data;
+		},
 		render: function render() {
+			var self = this;
+			var order = Object.keys(self.state).map(function (key, i) {
+				return _react2.default.createElement(
+					"div",
+					{ key: i },
+					_react2.default.createElement(
+						"strong",
+						null,
+						key,
+						":"
+					),
+					self.state[key]
+				);
+			});
+	
 			return _react2.default.createElement(
 				"div",
 				null,
@@ -25823,13 +26018,7 @@
 					{ id: "order-status", className: "status-container" },
 					"This is page for the order status"
 				),
-				_react2.default.createElement(
-					"pre",
-					null,
-					" ",
-					this.state.data,
-					" "
-				)
+				order
 			);
 		}
 	});
