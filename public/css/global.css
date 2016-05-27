@@ -1,21 +1,39 @@
-html {
-    color: #222;
-    font-size: 1em;
-    line-height: 1.4;
+.app .header-logo a,
+.app .header-menu a {
+    text-decoration: none;
+    font-style: none;
+    color: inherit;
+    cursor: pointer;
 }
 
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+.app .header-menu a:hover,
+.app .header-menu a.active {
+    text-decoration: underline;
 }
 
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+.app .logo,
+.app .menu {
+    display: block;
+    margin: 0 auto;
+    width: 29.2rem;
+    text-align: center;
 }
 
-body {
-    margin: 0;
-    padding: 4rem 0 0 0 !important;
-    background-color: #DADADA;
+.app .logo img {
+    width: 5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.app .logo h4 {
+    display: inline-block;
+    vertical-align: sub;
+}
+
+.app .header-menu a:first-child {
+    margin-right: 2em; 
+}
+
+.app .header-logo {
+    padding-top: 2rem;
 }

@@ -25184,7 +25184,7 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+		value: true
 	});
 	
 	var _react = __webpack_require__(1);
@@ -25205,57 +25205,68 @@
 	
 	var _Main2 = _interopRequireDefault(_Main);
 	
-	var _Que = __webpack_require__(224);
+	var _Que = __webpack_require__(225);
 	
 	var _Que2 = _interopRequireDefault(_Que);
 	
-	var _Order = __webpack_require__(225);
+	var _Order = __webpack_require__(226);
 	
 	var _Order2 = _interopRequireDefault(_Order);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function redirectToLogin(nextState, replace) {
-			if (!_auth2.default.loggedIn()) {
-					replace({
-							pathname: '/login',
-							state: { nextPathname: nextState.location.pathname }
-					});
-			}
+		if (!_auth2.default.loggedIn()) {
+			replace({
+				pathname: '/login',
+				state: {
+					nextPathname: nextState.location.pathname
+				}
+			});
+		}
 	}
 	
 	function redirectToDashboard(nextState, replace) {
-			if (_auth2.default.loggedIn()) {
-					replace('/');
-			}
+		if (_auth2.default.loggedIn()) {
+			replace('/');
+		}
 	}
 	
 	exports.default = {
-			component: _Main2.default,
-			childRoutes: [{ onEnter: redirectToDashboard,
-					childRoutes: [
-					// Unauthenticated routes
-					// Redirect to dashboard if user is already logged in
-					{ path: '/login',
-							getComponent: function getComponent(nextState, cb) {
-									!/* require.ensure */(function (require) {
-											cb(null, _Login2.default);
-									}(__webpack_require__));
-							}
-					}]
-			}, { path: '/order',
-					getComponent: function getComponent(nextState, cb) {
-							!/* require.ensure */(function (require) {
-									cb(null, _Order2.default);
-							}(__webpack_require__));
-					}
-			}, { path: '/que',
-					getComponent: function getComponent(nextState, cb) {
-							!/* require.ensure */(function (require) {
-									cb(null, _Que2.default);
-							}(__webpack_require__));
-					}
+		component: _Main2.default,
+		childRoutes: [{
+			onEnter: redirectToDashboard,
+			childRoutes: [
+			// Unauthenticated routes
+			// Redirect to dashboard if user is already logged in
+			{
+				path: '/login',
+				getComponent: function getComponent(nextState, cb) {
+					!/* require.ensure */(function (require) {
+						cb(null, _Login2.default);
+					}(__webpack_require__));
+				}
 			}]
+		}, {
+			path: '/order',
+			getComponent: function getComponent(nextState, cb) {
+				!/* require.ensure */(function (require) {
+					cb(null, _Order2.default);
+				}(__webpack_require__));
+			},
+			childRoutes: [{
+				path: "/create"
+			}, {
+				path: "/status"
+			}]
+		}, {
+			path: '/que',
+			getComponent: function getComponent(nextState, cb) {
+				!/* require.ensure */(function (require) {
+					cb(null, _Que2.default);
+				}(__webpack_require__));
+			}
+		}]
 	};
 
 /***/ },
@@ -25383,53 +25394,68 @@
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
-	      'form',
-	      { onSubmit: this.handleSubmit },
-	      _react2.default.createElement(
-	        'label',
-	        null,
-	        _react2.default.createElement('input', {
-	          ref: 'email',
-	          placeholder: 'email',
-	          defaultValue: this.state.email })
-	      ),
-	      _react2.default.createElement(
-	        'label',
-	        null,
-	        _react2.default.createElement('input', {
-	          ref: 'pass',
-	          placeholder: 'password',
-	          defaultValue: this.state.password })
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { type: 'submit' },
-	        'login'
-	      ),
+	      'div',
+	      { className: 'section' },
 	      _react2.default.createElement(
 	        'div',
-	        null,
-	        this.state.error && _react2.default.createElement(
+	        { className: 'container' },
+	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Bad login information'
-	        )
-	      ),
-	      _react2.default.createElement('br', null),
-	      _react2.default.createElement(
-	        'span',
-	        null,
-	        ' -- OR --'
-	      ),
-	      _react2.default.createElement('br', null),
-	      _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('div', { id: 'g-signin2', 'data-onsuccess': this.onSignIn }),
+	          _react2.default.createElement(
+	            'em',
+	            null,
+	            'Please sign in to processed to the app!'
+	          )
+	        ),
 	        _react2.default.createElement(
-	          'a',
-	          { href: '#', onClick: this.signOut },
-	          'Sign out'
+	          'form',
+	          { className: 'row', onSubmit: this.handleSubmit },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Email: '
+	          ),
+	          _react2.default.createElement('input', { autoComplete: 'off', required: 'required', type: 'text', ref: 'email', defaultValue: this.state.email }),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Password:'
+	          ),
+	          _react2.default.createElement('input', { autoComplete: 'off', required: 'required', type: 'password', ref: 'pass', defaultValue: this.state.password }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'column' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit' },
+	              'login'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            this.state.error && _react2.default.createElement(
+	              'p',
+	              null,
+	              'Bad login information'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            ' -- OR --'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('div', { id: 'g-signin2', 'data-onsuccess': this.onSignIn }),
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#', onClick: this.signOut },
+	              'Sign out'
+	            )
+	          )
 	        )
 	      )
 	    );
@@ -25444,7 +25470,6 @@
 	      'onsuccess': this.onSignIn
 	    });
 	  }
-	
 	});
 	
 	exports.default = (0, _reactRouter.withRouter)(Login);
@@ -25463,7 +25488,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(159);
+	var _Header = __webpack_require__(224);
+	
+	var _Header2 = _interopRequireDefault(_Header);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25476,29 +25503,17 @@
 				{ className: "app" },
 				_react2.default.createElement(
 					"div",
-					{ className: "menu" },
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ to: "/order", className: "logo" },
-						"Maybe coffee app"
-					),
-					_react2.default.createElement("br", null),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ to: "/order", className: "order" },
-						"Current Order"
-					),
-					_react2.default.createElement("br", null),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ to: "/que", className: "que" },
-						"Que"
-					)
+					{ className: "section" },
+					_react2.default.createElement(_Header2.default, { location: this.props.location })
 				),
 				_react2.default.createElement(
 					"div",
-					null,
-					this.props.children
+					{ className: "section" },
+					_react2.default.createElement(
+						"div",
+						{ className: "container" },
+						this.props.children
+					)
 				)
 			);
 		}
@@ -25508,6 +25523,77 @@
 
 /***/ },
 /* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(159);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Header = _react2.default.createClass({
+		displayName: "Header",
+	
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "container" },
+				_react2.default.createElement(
+					"div",
+					{ className: "column header-logo" },
+					_react2.default.createElement(
+						"div",
+						{ className: "seven columns offset-by-three" },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: "/order", className: "logo" },
+							_react2.default.createElement("img", { src: "/img/coffee.svg" }),
+							_react2.default.createElement(
+								"h4",
+								null,
+								"Maybe coffee app"
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "column header-menu" },
+					_react2.default.createElement(
+						"div",
+						{ className: "seven columns offset-by-three" },
+						_react2.default.createElement(
+							"div",
+							{ className: "menu" },
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: "/order", activeClassName: "active" },
+								"Order"
+							),
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: "/que", activeClassName: "active" },
+								"Que"
+							)
+						)
+					)
+				)
+			);
+		}
+	});
+	
+	exports.default = Header;
+
+/***/ },
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25537,7 +25623,7 @@
 	exports.default = Que;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25550,11 +25636,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Create = __webpack_require__(226);
+	var _reactRouter = __webpack_require__(159);
+	
+	var _Create = __webpack_require__(227);
 	
 	var _Create2 = _interopRequireDefault(_Create);
 	
-	var _Status = __webpack_require__(231);
+	var _Status = __webpack_require__(232);
 	
 	var _Status2 = _interopRequireDefault(_Status);
 	
@@ -25563,6 +25651,10 @@
 	var Order = _react2.default.createClass({
 		displayName: "Order",
 	
+		componentWillMount: function componentWillMount() {
+			// Set order here if already exists
+			// redirect to either create or status
+		},
 		getInitialState: function getInitialState() {
 			return {
 				order: null
@@ -25583,10 +25675,10 @@
 		}
 	});
 	
-	exports.default = Order;
+	exports.default = (0, _reactRouter.withRouter)(Order);
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25599,15 +25691,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsUpdate = __webpack_require__(227);
+	var _reactAddonsUpdate = __webpack_require__(228);
 	
 	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 	
-	var _values = __webpack_require__(229);
+	var _values = __webpack_require__(230);
 	
 	var _values2 = _interopRequireDefault(_values);
 	
-	var _Select = __webpack_require__(230);
+	var _Select = __webpack_require__(231);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -25654,86 +25746,96 @@
 				{ className: "create-order", onSubmit: this.onOrderSubmit },
 				_react2.default.createElement(
 					"div",
-					null,
-					"Complete the form to place the order!"
-				),
-				_react2.default.createElement(
-					"div",
-					null,
-					_react2.default.createElement("input", {
-						ref: "name",
-						autoComplete: "off",
-						className: "name",
-						type: "text",
-						required: "required",
-						placeholder: this.state.name.placeholder,
-						defaultValue: this.state.name.value })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
+					{ className: "row" },
 					_react2.default.createElement(
 						"div",
-						null,
-						"What coffee whould you like?"
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"h5",
+							null,
+							"Complete the form to place the order!"
+						)
 					),
-					_react2.default.createElement(_Select2.default, { data: this.state.coffee, classname: "coffee", name: "coffee", onUpdate: this.updateValues })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
 					_react2.default.createElement(
 						"div",
-						null,
-						"How many shots?"
+						{ className: "ten column" },
+						_react2.default.createElement("input", {
+							ref: "name",
+							autoComplete: "off",
+							type: "text",
+							required: "required",
+							placeholder: this.state.name.placeholder,
+							defaultValue: this.state.name.value })
 					),
-					_react2.default.createElement(_Select2.default, { data: this.state.shots, classname: "shots", name: "shots", onUpdate: this.updateValues })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
 					_react2.default.createElement(
 						"div",
-						null,
-						"How hot?"
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"label",
+							null,
+							"What coffee whould you like?"
+						),
+						_react2.default.createElement(_Select2.default, { data: this.state.coffee, classname: "coffee", name: "coffee", onUpdate: this.updateValues })
 					),
-					_react2.default.createElement(_Select2.default, { data: this.state.temp, classname: "temp", name: "temp", onUpdate: this.updateValues })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
 					_react2.default.createElement(
 						"div",
-						null,
-						"Diary?"
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"label",
+							null,
+							"How many shots?"
+						),
+						_react2.default.createElement(_Select2.default, { data: this.state.shots, classname: "shots", name: "shots", onUpdate: this.updateValues })
 					),
-					_react2.default.createElement(_Select2.default, { data: this.state.diary, classname: "diary", name: "diary", onUpdate: this.updateValues })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
 					_react2.default.createElement(
 						"div",
-						null,
-						"Flavour?"
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"label",
+							null,
+							"How hot?"
+						),
+						_react2.default.createElement(_Select2.default, { data: this.state.temp, classname: "temp", name: "temp", onUpdate: this.updateValues })
 					),
-					_react2.default.createElement(_Select2.default, { data: this.state.flavour, classname: "flavour", name: "flavour", onUpdate: this.updateValues })
-				),
-				_react2.default.createElement(
-					"div",
-					null,
-					_react2.default.createElement("input", {
-						ref: "note",
-						autoComplete: "off",
-						className: "note",
-						type: "text",
-						placeholder: this.state.note.placeholder,
-						defaultValue: this.state.note.value })
-				),
-				_react2.default.createElement(
-					"button",
-					{ type: "submit", value: "Post" },
-					"Place order"
+					_react2.default.createElement(
+						"div",
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"label",
+							null,
+							"Diary?"
+						),
+						_react2.default.createElement(_Select2.default, { data: this.state.diary, classname: "diary", name: "diary", onUpdate: this.updateValues })
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"label",
+							null,
+							"Flavour?"
+						),
+						_react2.default.createElement(_Select2.default, { data: this.state.flavour, classname: "flavour", name: "flavour", onUpdate: this.updateValues })
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "ten column" },
+						_react2.default.createElement("input", {
+							ref: "note",
+							autoComplete: "off",
+							type: "text",
+							placeholder: this.state.note.placeholder,
+							defaultValue: this.state.note.value })
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "ten column" },
+						_react2.default.createElement(
+							"button",
+							{ className: "button-primary", type: "submit", value: "Post" },
+							"Place order"
+						)
+					)
 				)
 			);
 		}
@@ -25742,13 +25844,13 @@
 	exports.default = Create;
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(228);
+	module.exports = __webpack_require__(229);
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25861,7 +25963,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25887,23 +25989,119 @@
 		},
 		coffee: {
 			value: "Americano",
-			list: [{ title: "Americano", value: "Americano" }, { title: "Americano Misto", value: "Americano Misto" }, { title: "Cappuccino", value: "Cappuccino" }, { title: "Chai Latte", value: "Chai Latte" }, { title: "Espresso", value: "Espresso" }, { title: "Flat White", value: "Flat White" }, { title: "Latte", value: "Latte" }, { title: "London Fog", value: "London Fog" }, { title: "Machiatto", value: "Machiatto" }, { title: "Mocha", value: "Mocha" }]
+			list: [{
+				title: "Americano",
+				value: "Americano"
+			}, {
+				title: "Americano Misto",
+				value: "Americano Misto"
+			}, {
+				title: "Cappuccino",
+				value: "Cappuccino"
+			}, {
+				title: "Chai Latte",
+				value: "Chai Latte"
+			}, {
+				title: "Espresso",
+				value: "Espresso"
+			}, {
+				title: "Flat White",
+				value: "Flat White"
+			}, {
+				title: "Latte",
+				value: "Latte"
+			}, {
+				title: "London Fog",
+				value: "London Fog"
+			}, {
+				title: "Machiatto",
+				value: "Machiatto"
+			}, {
+				title: "Mocha",
+				value: "Mocha"
+			}]
 		},
 		shots: {
 			value: 0,
-			list: [{ title: "No shots", value: 0 }, { title: "1 shot", value: 1 }, { title: "2 shots", value: 2 }, { title: "3 shots", value: 3 }, { title: "4 shots", value: 4 }]
+			list: [{
+				title: "No shots",
+				value: 0
+			}, {
+				title: "1 shot",
+				value: 1
+			}, {
+				title: "2 shots",
+				value: 2
+			}, {
+				title: "3 shots",
+				value: 3
+			}, {
+				title: "4 shots",
+				value: 4
+			}]
 		},
 		temp: {
 			value: "Warm",
-			list: [{ title: "Cold", value: "Cold" }, { title: "Warm", value: "Warm" }, { title: "Hot", value: "Hot" }]
+			list: [{
+				title: "Cold",
+				value: "Cold"
+			}, {
+				title: "Warm",
+				value: "Warm"
+			}, {
+				title: "Hot",
+				value: "Hot"
+			}]
 		},
 		diary: {
 			value: "None",
-			list: [{ title: "None", value: "None" }, { title: "Milk", value: "Milk" }, { title: "Soy", value: "Soy" }, { title: "Almond", value: "Almond" }, { title: "Coconut", value: "Coconut" }]
+			list: [{
+				title: "None",
+				value: "None"
+			}, {
+				title: "Milk",
+				value: "Milk"
+			}, {
+				title: "Soy",
+				value: "Soy"
+			}, {
+				title: "Almond",
+				value: "Almond"
+			}, {
+				title: "Coconut",
+				value: "Coconut"
+			}]
 		},
 		flavour: {
 			value: "None",
-			list: [{ title: "None", value: "None" }, { title: "Flavour of the week", value: "Flavour of the week" }, { title: "Vanilla", value: "Vanilla" }, { title: "Hazelnut", value: "Hazelnut" }, { title: "Caramel", value: "Caramel" }, { title: "Honey", value: "Honey" }, { title: "Cinnamon", value: "Cinnamon" }, { title: "Cardamom", value: "Cardamom" }, { title: "Peppermint", value: "Peppermint" }]
+			list: [{
+				title: "None",
+				value: "None"
+			}, {
+				title: "Flavour of the week",
+				value: "Flavour of the week"
+			}, {
+				title: "Vanilla",
+				value: "Vanilla"
+			}, {
+				title: "Hazelnut",
+				value: "Hazelnut"
+			}, {
+				title: "Caramel",
+				value: "Caramel"
+			}, {
+				title: "Honey",
+				value: "Honey"
+			}, {
+				title: "Cinnamon",
+				value: "Cinnamon"
+			}, {
+				title: "Cardamom",
+				value: "Cardamom"
+			}, {
+				title: "Peppermint",
+				value: "Peppermint"
+			}]
 		}
 	};
 	
@@ -25918,7 +26116,7 @@
 	exports.default = Values;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25973,7 +26171,7 @@
 	exports.default = Select;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26014,7 +26212,7 @@
 				"div",
 				null,
 				_react2.default.createElement(
-					"div",
+					"h3",
 					{ id: "order-status", className: "status-container" },
 					"This is page for the order status"
 				),

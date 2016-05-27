@@ -3,12 +3,12 @@ import { withRouter } from 'react-router'
 import auth from '../utils/auth.js'
 
 const Login = React.createClass({
-  getInitialState: function () {
-      return {
-        error: false,
-        email: "",
-        password: ""
-      };
+  getInitialState: function() {
+    return {
+      error: false,
+      email: "",
+      password: ""
+    };
   },
   onSignIn: function(googleUser) {
     var profile = googleUser.getBasicProfile();
@@ -23,7 +23,7 @@ const Login = React.createClass({
       console.log('User signed out.');
     });
   },
-  handleSubmit: function (event) {
+  handleSubmit: function(event) {
     event.preventDefault();
 
     const email = this.refs.email.value;
@@ -44,34 +44,38 @@ const Login = React.createClass({
   },
   render: function () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label><input 
-        ref="email" 
-        placeholder="email" 
-        defaultValue={this.state.email} /></label>
-        <label><input 
-        ref="pass" 
-        placeholder="password" 
-        defaultValue={this.state.password}/></label> 
+      <div className="section">
+        <div className="container">
+          <p> 
+            <em>Please sign in to processed to the app!</em>
+          </p>
+          <form className="row" onSubmit={this.handleSubmit}>
 
-        <button type="submit">login</button>
-        <div>
-          {this.state.error && (
-            <p>Bad login information</p>
-          )}
+              <label>Email: </label>
+              <input autoComplete="off" required="required" type="text" ref="email" defaultValue={this.state.email} />
+
+              <label>Password:</label>
+              <input autoComplete="off" required="required" type="password" ref="pass" defaultValue={this.state.password}/> 
+
+            <div className="column">
+              <button type="submit">login</button>
+            </div>
+
+            <div>
+              {this.state.error && (
+                <p>Bad login information</p>
+              )}
+            </div>
+            <p> -- OR --</p>
+            <div>
+              <div id="g-signin2" data-onsuccess={this.onSignIn}>
+              </div>
+              <a href="#" onClick={this.signOut}>Sign out</a>
+            </div>
+
+          </form>
         </div>
-
-        <br />
-        <span> -- OR --</span>
-        <br />
-
-        <div>
-          <div id="g-signin2" data-onsuccess={this.onSignIn}>
-          </div>
-          <a href="#" onClick={this.signOut}>Sign out</a>
-        </div>
-
-      </form>
+      </div>
     )
   },
   componentDidMount: function() {
@@ -84,7 +88,6 @@ const Login = React.createClass({
       'onsuccess': this.onSignIn
     });
   }
-
 })
 
 export default withRouter(Login)

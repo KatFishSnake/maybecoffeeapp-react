@@ -30,69 +30,74 @@ const Create = React.createClass({
 	},
 	updateValues: function (name, value) {
 		let newState = update(this.state, {
-		  [name]: {
-		    value: { $set: value }
-		  }
+			[name]: {
+				value: { $set: value }
+			}
 		});
 
 		this.setState(newState);
 	},
 	render: function () {
 		return (
-		    <form className="create-order" onSubmit={this.onOrderSubmit}>
+			<form className="create-order" onSubmit={this.onOrderSubmit}>
+				<div className="row">
 
-		      <div>
-		        Complete the form to place the order!
-		      </div>
+					<div className="ten column">
+						<h5>
+							Complete the form to place the order!
+						</h5>
+					</div>
 
-		      <div>
-		          <input 
-		          ref="name"
-		          autoComplete="off" 
-		          className="name" 
-		          type="text" 
-		          required="required" 
-		          placeholder={this.state.name.placeholder} 
-		          defaultValue={this.state.name.value} />
-		      </div>
+					<div className="ten column">
+						<input 
+						ref="name"
+						autoComplete="off" 
+						type="text" 
+						required="required" 
+						placeholder={this.state.name.placeholder} 
+						defaultValue={this.state.name.value} />
+					</div>
 
-		      	<div>
-			        <div>What coffee whould you like?</div>
-			        <Select data={this.state.coffee} classname={"coffee"} name={"coffee"} onUpdate={this.updateValues}/>
-		        </div>
+					<div className="ten column">
+						<label>What coffee whould you like?</label>
+						<Select data={this.state.coffee} classname={"coffee"} name={"coffee"} onUpdate={this.updateValues}/>
+					</div>
 
-				<div>
-		        	<div>How many shots?</div>
-			        <Select data={this.state.shots} classname={"shots"} name={"shots"} onUpdate={this.updateValues}/>
-		        </div>
+					<div className="ten column">
+						<label>How many shots?</label>
+						<Select data={this.state.shots} classname={"shots"} name={"shots"} onUpdate={this.updateValues}/>
+					</div>
 
-				<div>
-		        	<div>How hot?</div>
-			        <Select data={this.state.temp} classname={"temp"} name={"temp"} onUpdate={this.updateValues} />
-		        </div>
+					<div className="ten column">
+						<label>How hot?</label>
+						<Select data={this.state.temp} classname={"temp"} name={"temp"} onUpdate={this.updateValues} />
+					</div>
 
-				<div>
-		        	<div>Diary?</div>
-		        	<Select data={this.state.diary} classname={"diary"} name={"diary"}  onUpdate={this.updateValues}/>
-		        </div>
+					<div className="ten column">
+						<label>Diary?</label>
+						<Select data={this.state.diary} classname={"diary"} name={"diary"}  onUpdate={this.updateValues}/>
+					</div>
 
-				<div>
-		        	<div>Flavour?</div>
-		        	<Select data={this.state.flavour} classname={"flavour"} name={"flavour"}  onUpdate={this.updateValues}/>
-		        </div>
+					<div className="ten column">
+						<label>Flavour?</label>
+						<Select data={this.state.flavour} classname={"flavour"} name={"flavour"}  onUpdate={this.updateValues}/>
+					</div>
 
-		      <div>
-				<input 
-		          ref="note"
-		          autoComplete="off" 
-		          className="note" 
-		          type="text" 
-		          placeholder={this.state.note.placeholder} 
-		          defaultValue={this.state.note.value} />
-		      </div>
+					<div className="ten column">
+						<input
+						ref="note"
+						autoComplete="off" 
+						type="text" 
+						placeholder={this.state.note.placeholder} 
+						defaultValue={this.state.note.value} />
+					</div>
 
-		      <button type="submit" value="Post">Place order</button>
-        	</form>
+					<div className="ten column">
+						<button className="button-primary" type="submit" value="Post">Place order</button>
+					</div>
+
+				</div>
+			</form>
 		);
 	}
 });

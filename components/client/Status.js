@@ -7,21 +7,21 @@ const Status = React.createClass({
 	render: function () {
 		let self = this;
 		let order = Object.keys(self.state).map(function(key, i) {
-		    return (
+			return (
 				<div key={i}>
 					<strong>{key}:</strong>
 					{self.state[key]}
 				</div>
-		    );
+			);
 		});
 
 		return (
 			<div>
-			    <div id="order-status" className="status-container">
-			    	This is page for the order status
-	        	</div>
-	        	{order}
-        	</div>
+				<h3 id="order-status" className="status-container">
+					This is page for the order status
+				</h3>
+				{order}
+			</div>
 		);
 	}
 });
